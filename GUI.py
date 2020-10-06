@@ -93,6 +93,9 @@ class RegisterWindow(tk.Frame):
                                   text="Cancel",font="Helvetica 10", command=lambda: controller.show_frame(LoginWindow))
         cancel_button.place(relx=0.15, rely=0.57, anchor=tk.W)
 
+        self.register_warning_label = tk.Label(register_frame,
+                                  text="", bg='#7f8694', fg='#C03A3A', font="Helvetica 10")
+        self.register_warning_label.place(relx=0.045,rely=0.7,anchor=tk.W)
 
 class LoginWindow(tk.Frame):
     """is the GUI Class for the Login Window...
@@ -140,6 +143,10 @@ class LoginWindow(tk.Frame):
                                         activeforeground="#C5C8CF",
                                         font="Helvetica 10")
         register_button.place(relx=0.28, rely=0.70, anchor=tk.W)
+
+        self.login_warning_label = tk.Label(login_frame,
+                                  text="", bg='#7f8694', fg='#C03A3A', font="Helvetica 10")
+        self.login_warning_label.place(relx=0.045,rely=0.8,anchor=tk.W)
 
 #Function for debugging purposes (Prints "Clicked")
 def clicked():
