@@ -1,7 +1,7 @@
+from LoginPage import LoginPage
+from RegisterPage import RegisterPage
+from ReportPage import ReportPage
 import tkinter as tk
-import LoginPage
-import RegisterPage
-import ReportPage
 
 
 # TODO CHECK TO CHANGE THE kr IMPORT AND MOVE IT TO THE REGISTER PAGE

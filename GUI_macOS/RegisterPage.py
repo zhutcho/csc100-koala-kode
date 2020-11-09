@@ -31,7 +31,7 @@ class RegisterPage(tk.Frame):
         self.new_password.config(show='*')
         # Create Button GUI
         create_button = tk.Button(register_frame, text="Create", command=lambda:
-                                  Register.register_entry(self))
+                                  register_entry(self))
 
         create_button.place(relx=0.05, rely=0.57, anchor=tk.W)
         # Cancel Button GUI
@@ -43,24 +43,25 @@ class RegisterPage(tk.Frame):
                                                text="", fg='#C03A3A')
         self.register_warning_label.place(relx=0.045, rely=0.7, anchor=tk.W)
 
-    def register_entry(self):
 
-        register_page = app.get_page(RegisterPage)
+def register_entry(self):
 
-        if len(register_page.new_username.get()) <= 7 and register_page.new_username.get() != "admin":
-            register_page.register_warning_label["text"] = "Username must be greater than 7 digits long"
-        elif bool(re.search(r"\s", register_page.new_username.get())) == True:
-            register_page.register_warning_label["text"] = "Username must not contain spaces"
-        elif bool(re.search(r"\d", register_page.new_password.get())) == False\
-                or bool(re.search(r"[!@#$%^&*()<>,./\{}?]", register_page.new_password.get())) == False:
-            register_page.register_warning_label["text"] = "Password must contain at least one digit and at least one special character"
-        else:
-            kr.set_password(service_id, register_page.new_username.get(
-            ), register_page.new_password.get())
-            register_page.register_warning_label["text"] = ""
-            # TODO THINK OF MORE CHECKS/TESTS FOR USER CREDENTIALS
+    register_page = get_page(RegisterPage)
 
-            # For Developers **ONLY** DELETE UPON SUBMISSION:
-            print(register_page.new_password.get())
-            print(register_page.new_username.get())
-            # End of Dev Only
+    if len(register_page.new_username.get()) <= 7 and register_page.new_username.get() != "admin":
+        register_page.register_warning_label["text"] = "Username must be greater than 7 digits long"
+    elif bool(re.search(r"\s", register_page.new_username.get())) == True:
+        register_page.register_warning_label["text"] = "Username must not contain spaces"
+    elif bool(re.search(r"\d", register_page.new_password.get())) == False\
+            or bool(re.search(r"[!@#$%^&*()<>,./\{}?]", register_page.new_password.get())) == False:
+        register_page.register_warning_label["text"] = "Password must contain at least one digit and at least one special character"
+    else:
+        kr.set_password(service_id, register_page.new_username.get(
+        ), register_page.new_password.get())
+        register_page.register_warning_label["text"] = ""
+        # TODO THINK OF MORE CHECKS/TESTS FOR USER CREDENTIALS
+
+        # For Developers **ONLY** DELETE UPON SUBMISSION:
+        print(register_page.new_password.get())
+        print(register_page.new_username.get())
+        # End of Dev Only

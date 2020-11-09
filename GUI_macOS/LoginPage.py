@@ -1,3 +1,5 @@
+from RegisterPage import RegisterPage
+from ReportPage import ReportPage
 import tkinter as tk
 import keyring as kr
 
@@ -33,7 +35,7 @@ class LoginPage(tk.Frame):
         self.pass_word.config(show='*')
         # Login Button
         login_button = tk.Button(
-            login_frame, text="Login", command=lambda: Register.login_entry(self))
+            login_frame, text="Login", command=lambda: login_entry(self))
         login_button.place(relx=0.05, rely=0.57, anchor=tk.W)
 
         # Register Text
@@ -52,23 +54,24 @@ class LoginPage(tk.Frame):
                                             text="", fg='#C03A3A')
         self.login_warning_label.place(relx=0.045, rely=0.8, anchor=tk.W)
 
-    def login_entry(self):
 
-        login_page = app.get_page(LoginPage)
-        check_pass_word = kr.get_password(
-            service_id, login_page.user_name.get())
-        print(check_pass_word)
-        login_page.login_warning_label["text"] = ""
-        if check_pass_word == None:
-            login_page.login_warning_label["text"] = "Username or Password does not exist.."
-        elif check_pass_word != None and check_pass_word == login_page.pass_word.get():
-            print("Successfully logged in as: " +
-                  str(login_page.user_name.get()))
-            if login_page.user_name.get() == "admin":
-                print("Logged in As Administrator")
-                app.show_frame(ReportPage)
-            elif login_page.user_name.get() != "admin":
-                print("Logged in As Staff Member")
-                app.show_frame(ReportPage)
-        elif check_pass_word != None and check_pass_word != login_page.pass_word.get():
-            login_page.login_warning_label["text"] = "Username or Password does not exist.."
+def login_entry(self):
+
+    login_page = get_page(LoginPage)
+    check_pass_word = kr.get_password(
+        service_id, login_page.user_name.get())
+    print(check_pass_word)
+    login_page.login_warning_label["text"] = ""
+    if check_pass_word == None:
+        login_page.login_warning_label["text"] = "Username or Password does not exist.."
+    elif check_pass_word != None and check_pass_word == login_page.pass_word.get():
+        print("Successfully logged in as: " +
+              str(login_page.user_name.get()))
+        if login_page.user_name.get() == "admin":
+            print("Logged in As Administrator")
+            show_frame(ReportPage)
+        elif login_page.user_name.get() != "admin":
+            print("Logged in As Staff Member")
+            show_frame(ReportPage)
+    elif check_pass_word != None and check_pass_word != login_page.pass_word.get():
+        login_page.login_warning_label["text"] = "Username or Password does not exist.."
