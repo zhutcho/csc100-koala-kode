@@ -9,6 +9,9 @@ service_id = 'Wildlife Hospital'
 username = ""
 
 
+TK_SILENCE_DEPRECATION = 1
+
+
 class MainApp(tk.Tk):
     """is the Controller of the application...
     to access this class from the children classes, use controller.function,

@@ -2,7 +2,7 @@ import GUI as gui
 import re
 
 
-class Registry:
+class Register:
     """Registry Class sets passwords and usernames,
     it sets restrictions on what characters can be used as a username and password"""
 
