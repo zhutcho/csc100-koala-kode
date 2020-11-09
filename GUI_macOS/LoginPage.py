@@ -38,7 +38,7 @@ class LoginPage(tk.Frame):
         login_button = tk.Button(
             login_frame, text="Login", command=lambda: self.login_entry())
         login_button.place(relx=0.05, rely=0.57, anchor=tk.W)
-
+        """
         # Register Text
         request_registry_label = tk.Label(login_frame,
                                           text="Need an account? ")
@@ -50,7 +50,7 @@ class LoginPage(tk.Frame):
                                     activeforeground="#C5C8CF",
                                     font="Helvetica 10")
         register_button.place(relx=0.28, rely=0.70, anchor=tk.W)
-
+        """
         self.login_warning_label = tk.Label(login_frame,
                                             text="", fg='#C03A3A')
         self.login_warning_label.place(relx=0.045, rely=0.8, anchor=tk.W)
