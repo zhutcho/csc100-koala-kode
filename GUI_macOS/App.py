@@ -24,23 +24,30 @@ class MainApp(tk.Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        self.frames = {
-            "LoginPage": LoginPage,
-            "RegisterPage": RegisterPage,
-            "ReportPage": ReportPage
-        }
-
-        for F in self.frames.values():
+        # Create Empty list for windows
+        self.frames = {}
+        self.frame_names = ["LoginPage", "RegisterPage", "ReportPage"]
+        # Cycle through windows and set them all to frames
+        # !!! UPON CREATING A NEW GUI ENTER THE CHILD CLASS NAME HERE !!!
+        index = 0
+        for F in (LoginPage, RegisterPage, ReportPage):
             frame = F(container, self)
-            frame.grid(row=0, column=0, sticky="nsew")
+            print(self.frame_names[index])
+            print(frame)
+            self.frames[self.frame_names[index]] = frame
 
+            frame.grid(row=0, column=0, sticky="nsew")
+            index += 1
+
+        print(self.frames["LoginPage"])
         self.show_frame("LoginPage")
 
     def show_frame(self, cont):
         """This function is used to bring the window to the front, for viewing.
         Takes one argument show_frame(WindowClass)"""
         frame = self.frames[cont]
-        frame.lift(self)
+        print(frame)
+        frame.tkraise()
 
     def get_page(self, page_class):
         """This function is used to pull a windows data without needing to view the page

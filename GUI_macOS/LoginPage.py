@@ -2,6 +2,10 @@ import tkinter as tk
 import keyring as kr
 
 
+service_id = 'Wildlife Hospital'
+username = ""
+
+
 # sub-root to contain the LoginPage frame and a controller function to switch the tabs within the LoginPage
 class LoginPage(tk.Frame):
 
@@ -32,7 +36,7 @@ class LoginPage(tk.Frame):
         self.pass_word.config(show='*')
         # Login Button
         login_button = tk.Button(
-            login_frame, text="Login", command=lambda: login_entry(self))
+            login_frame, text="Login", command=lambda: self.login_entry())
         login_button.place(relx=0.05, rely=0.57, anchor=tk.W)
 
         # Register Text
@@ -52,26 +56,25 @@ class LoginPage(tk.Frame):
         self.login_warning_label.place(relx=0.045, rely=0.8, anchor=tk.W)
 
     def get_name(self):
-        return self.name
+        return "LoginPage"
 
+    def login_entry(self):
 
-def login_entry(self):
-
-    login_page = get_page("LoginPage")
-    check_pass_word = kr.get_password(
-        service_id, login_page.user_name.get())
-    print(check_pass_word)
-    login_page.login_warning_label["text"] = ""
-    if check_pass_word == None:
-        login_page.login_warning_label["text"] = "Username or Password does not exist.."
-    elif check_pass_word != None and check_pass_word == login_page.pass_word.get():
-        print("Successfully logged in as: " +
-              str(login_page.user_name.get()))
-        if login_page.user_name.get() == "admin":
-            print("Logged in As Administrator")
-            show_frame("ReportPage")
-        elif login_page.user_name.get() != "admin":
-            print("Logged in As Staff Member")
-            show_frame("ReportPage")
-    elif check_pass_word != None and check_pass_word != login_page.pass_word.get():
-        login_page.login_warning_label["text"] = "Username or Password does not exist.."
+        login_page = self.controller.get_page("LoginPage")
+        check_pass_word = kr.get_password(
+            service_id, login_page.user_name.get())
+        print(check_pass_word)
+        login_page.login_warning_label["text"] = ""
+        if check_pass_word == None:
+            login_page.login_warning_label["text"] = "Username or Password does not exist.."
+        elif check_pass_word != None and check_pass_word == login_page.pass_word.get():
+            print("Successfully logged in as: " +
+                  str(login_page.user_name.get()))
+            if login_page.user_name.get() == "admin":
+                print("Logged in As Administrator")
+                self.controller.show_frame("ReportPage")
+            elif login_page.user_name.get() != "admin":
+                print("Logged in As Staff Member")
+                self.controller.show_frame("ReportPage")
+        elif check_pass_word != None and check_pass_word != login_page.pass_word.get():
+            login_page.login_warning_label["text"] = "Username or Password does not exist.."
