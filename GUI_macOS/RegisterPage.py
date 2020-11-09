@@ -2,6 +2,8 @@ import tkinter as tk
 import keyring as kr
 import re
 
+service_id = 'Wildlife Hospital'
+username = ""
 
 class RegisterPage(tk.Frame):
 
@@ -47,9 +49,10 @@ class RegisterPage(tk.Frame):
 
 def register_entry(self):
 
-    register_page = get_page("RegisterPage")
-
-    if len(register_page.new_username.get()) <= 7 and register_page.new_username.get() != "admin":
+    register_page = self.controller.get_page("RegisterPage")
+    if kr.get_password(service_id, register_page.new_username.get()) != None:
+            register_page.register_warning_label["text"] = "User Already Exists"
+    elif len(register_page.new_username.get()) <= 7 and register_page.new_username.get() != "admin":
         register_page.register_warning_label["text"] = "Username must be greater than 7 digits long"
     elif bool(re.search(r"\s", register_page.new_username.get())) == True:
         register_page.register_warning_label["text"] = "Username must not contain spaces"
@@ -59,7 +62,7 @@ def register_entry(self):
     else:
         kr.set_password(service_id, register_page.new_username.get(
         ), register_page.new_password.get())
-        register_page.register_warning_label["text"] = ""
+        register_page.register_warning_label["text"] = "Successfully Created User"
         # TODO THINK OF MORE CHECKS/TESTS FOR USER CREDENTIALS
 
         # For Developers **ONLY** DELETE UPON SUBMISSION:

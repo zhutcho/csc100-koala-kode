@@ -2,7 +2,7 @@ from LoginPage import LoginPage
 from RegisterPage import RegisterPage
 from ReportPage import ReportPage
 import tkinter as tk
-
+import keyring as kr
 
 service_id = 'Wildlife Hospital'
 username = ""
@@ -40,7 +40,12 @@ class MainApp(tk.Tk):
             index += 1
 
         print(self.frames["LoginPage"])
-        self.show_frame("LoginPage")
+        
+        # Set Page on Startup:
+        if kr.get_password(service_id, "admin") != None:
+            self.show_frame("LoginPage")
+        else:    
+            self.show_frame("RegisterPage")
 
     def show_frame(self, cont):
         """This function is used to bring the window to the front, for viewing.
