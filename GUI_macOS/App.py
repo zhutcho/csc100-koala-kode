@@ -26,7 +26,7 @@ class MainApp(tk.Tk):
         self.frames = {}
         # Cycle through windows and set them all to frames
         # !!! UPON CREATING A NEW GUI ENTER THE CHILD CLASS NAME HERE !!!
-        for F in (LoginPage, RegisterPage, AdminPage, ReportPage, StaffPage):
+        for F in (LoginPage, RegisterPage, ReportPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -88,10 +88,10 @@ class Register:
                   str(login_page.user_name.get()))
             if login_page.user_name.get() == "admin":
                 print("Logged in As Administrator")
-                app.show_frame(AdminPage)
+                app.show_frame(ReportPage)
             elif login_page.user_name.get() != "admin":
                 print("Logged in As Staff Member")
-                app.show_frame(StaffPage)
+                app.show_frame(ReportPage)
         elif check_pass_word != None and check_pass_word != login_page.pass_word.get():
             login_page.login_warning_label["text"] = "Username or Password does not exist.."
 
@@ -184,49 +184,6 @@ class RegisterPage(tk.Frame):
         self.register_warning_label.place(relx=0.045, rely=0.7, anchor=tk.W)
 
 
-class AdminPage(tk.Frame):
-
-    def __init__(self, parent, controller):
-        # self = this frame specific.
-        tk.Frame.__init__(self, parent)
-        # set controller to MainApp()
-        self.controller = controller
-
-        # --- Change Anything to the GUI bellow here ---
-        """==============================================================="""
-        # Create 'Logged in as:' text
-        admin_text = tk.Text(
-            self, width=50, height=2, bg='#b7bbc3', relief=tk.FLAT, font="Helvetica 10")
-        admin_text.insert(tk.INSERT, "Signed in as Administrator")
-        admin_text.place(relx=0.83, rely=0.0195, anchor=tk.W)
-        admin_text.config(state="disabled")
-        sign_out_button = tk.Button(self, text="Sign Out", relief=tk.FLAT,
-                                    bg="#b7bbc3", fg="#1b1811", activebackground='#b7bbc3',
-                                    command=lambda: controller.show_frame(LoginPage), borderwidth=0,
-                                    activeforeground="#527b99",
-                                    font="Helvetica 10 underline"
-                                    )
-        sign_out_button.place(relx=0.94, rely=0.01, anchor=tk.W)
-
-        # Background colour
-        self.config(bg="#b7bbc3")
-        # Create new frame
-        admin_page_frame_right = tk.Frame(
-            self, width=1505, height=805, bg='#7f8694',)
-        admin_page_frame_right.place(x=0, y=10, relx=0.01, rely=0.01)
-
-        # Brief Report Button
-        brief_report_button = tk.Button(admin_page_frame_right, text="REPORT", relief=tk.FLAT,
-                                        bg="#7f8694", fg="#1b1811", activebackground='#7f8694',
-                                        command=lambda: controller.show_frame(ReportPage), borderwidth=0,
-                                        activeforeground="#C5C8CF",
-                                        font="Helvetica 20 underline"
-                                        )
-        brief_report_button.place(relx=0.9, rely=0.95, anchor=tk.W)
-
-        # TODO Complete GUI & Plan Layout.
-
-
 class ReportPage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -261,41 +218,9 @@ class ReportPage(tk.Frame):
 
         # TODO Add Visual Graphs & Plan Layout
 
-
-class StaffPage(tk.Frame):
-
-    def __init__(self, parent, controller):
-        # self = this frame specific.
-        tk.Frame.__init__(self, parent)
-        # set MainApp() to controller
-        self.controller = controller
-
-        # --- Change Anything to the GUI bellow here ---
-        """==============================================================="""
-
-        # Background colour
-        self.config(bg="#b7bbc3")
-        # Create 'Logged in as:' text
-        staff_text = tk.Text(
-            self, width=50, height=2, bg='#b7bbc3', relief=tk.FLAT, font="Helvetica 10")
-        staff_text.insert(tk.INSERT, "Signed in as Staff Member")
-        staff_text.place(relx=0.83, rely=0.0195, anchor=tk.W)
-        staff_text.config(state="disabled")
-
-        sign_out_button = tk.Button(self, text="Sign Out", relief=tk.FLAT,
-                                    bg="#b7bbc3", fg="#1b1811", activebackground='#b7bbc3',
-                                    command=lambda: controller.show_frame(LoginPage), borderwidth=0,
-                                    activeforeground="#527b99",
-                                    font="Helvetica 10 underline"
-                                    )
-        sign_out_button.place(relx=0.94, rely=0.01, anchor=tk.W)
-        # Create new frame
-        staff_page_frame_right = tk.Frame(
-            self, width=1505, height=805, bg='#7f8694')
-        staff_page_frame_right.place(x=0, y=10, relx=0.01, rely=0.01)
-
-
 # Function used for debugging purposes.
+
+
 def clicked():
     print("Button Clicked!")
 
