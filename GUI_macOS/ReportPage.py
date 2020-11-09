@@ -1,9 +1,8 @@
 import tkinter as tk
+import Database.CSC100DB
 
 
 class ReportPage(tk.Frame):
-
-    name = "ReportPage"
 
     def __init__(self, parent, controller):
         # self = this frame specific.
@@ -11,28 +10,15 @@ class ReportPage(tk.Frame):
         # set controller to MainApp()
         self.controller = controller
 
-        # --- Change Anything to the GUI bellow here ---
-        """==============================================================="""
-
-        # Set Background Colour
-        self.config(bg="#7f8694")
-
         # print to PDF Button
-        pdf_button = tk.Button(self, text="Print to PDF", relief=tk.FLAT,
-                               bg="#7f8694", fg="#023e8a", activebackground='#7f8694',
-                               command=lambda: clicked(), borderwidth=0,
-                               activeforeground="#C5C8CF",
-                               font="Helvetica 10"
-                               )
-        pdf_button.place(relx=0.6, rely=0.70, anchor=tk.W)
+        pdf_button = tk.Button(self, text="Create PDF",
+                               relief=tk.FLAT, command=lambda: createPDF())
 
         # TODO Add Visual Graphs & Plan Layout
-
-    def get_name(self):
-        return self.name
 
 
 # Function used for debugging purposes.
 
-def clicked():
-    print("Button Clicked!")
+
+def createPDF():
+    print(CSC100DB.callMonthlyProc())
