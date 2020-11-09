@@ -202,7 +202,7 @@ class AdminPage(tk.Frame):
         admin_text.config(state="disabled")
         sign_out_button = tk.Button(self, text="Sign Out", relief=tk.FLAT,
                                     bg="#b7bbc3", fg="#1b1811", activebackground='#b7bbc3',
-                                    command=lambda: controller.show_frame(LoginWindow), borderwidth=0,
+                                    command=lambda: controller.show_frame(LoginPage), borderwidth=0,
                                     activeforeground="#527b99",
                                     font="Helvetica 10 underline"
                                     )
@@ -218,7 +218,7 @@ class AdminPage(tk.Frame):
         # Brief Report Button
         brief_report_button = tk.Button(admin_page_frame_right, text="REPORT", relief=tk.FLAT,
                                         bg="#7f8694", fg="#1b1811", activebackground='#7f8694',
-                                        command=lambda: controller.show_frame(rp.ReportPage), borderwidth=0,
+                                        command=lambda: controller.show_frame(ReportPage), borderwidth=0,
                                         activeforeground="#C5C8CF",
                                         font="Helvetica 20 underline"
                                         )
@@ -244,7 +244,7 @@ class ReportPage(tk.Frame):
         # Return To Admin Page Button
         return_button = tk.Button(self, text="Return To Profile", relief=tk.FLAT,
                                   bg="#7f8694", fg="#023e8a", activebackground='#7f8694',
-                                  command=lambda: controller.show_frame(ap.AdminPage), borderwidth=0,
+                                  command=lambda: controller.show_frame(AdminPage), borderwidth=0,
                                   activeforeground="#C5C8CF",
                                   font="Helvetica 10"
                                   )
@@ -284,7 +284,7 @@ class StaffPage(tk.Frame):
 
         sign_out_button = tk.Button(self, text="Sign Out", relief=tk.FLAT,
                                     bg="#b7bbc3", fg="#1b1811", activebackground='#b7bbc3',
-                                    command=lambda: controller.show_frame(LoginWindow), borderwidth=0,
+                                    command=lambda: controller.show_frame(LoginPage), borderwidth=0,
                                     activeforeground="#527b99",
                                     font="Helvetica 10 underline"
                                     )
@@ -295,6 +295,11 @@ class StaffPage(tk.Frame):
         staff_page_frame_right.place(x=0, y=10, relx=0.01, rely=0.01)
 
 
+# Function used for debugging purposes.
+def clicked():
+    print("Button Clicked!")
+
+
 app = MainApp()
-app.geometry("1280x720")
+app.geometry("1920x1080")
 app.mainloop()
