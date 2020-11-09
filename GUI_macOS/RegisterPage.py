@@ -4,6 +4,9 @@ import re
 
 
 class RegisterPage(tk.Frame):
+
+    name = "RegisterPage"
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -36,17 +39,20 @@ class RegisterPage(tk.Frame):
         create_button.place(relx=0.05, rely=0.57, anchor=tk.W)
         # Cancel Button GUI
         cancel_button = tk.Button(register_frame,
-                                  text="Cancel", command=lambda: controller.show_frame(LoginPage))
+                                  text="Cancel", command=lambda: controller.show_frame("LoginPage"))
         cancel_button.place(relx=0.15, rely=0.57, anchor=tk.W)
 
         self.register_warning_label = tk.Label(register_frame,
                                                text="", fg='#C03A3A')
         self.register_warning_label.place(relx=0.045, rely=0.7, anchor=tk.W)
 
+    def get_name(self):
+        return self.name
+
 
 def register_entry(self):
 
-    register_page = get_page(RegisterPage)
+    register_page = get_page("RegisterPage")
 
     if len(register_page.new_username.get()) <= 7 and register_page.new_username.get() != "admin":
         register_page.register_warning_label["text"] = "Username must be greater than 7 digits long"

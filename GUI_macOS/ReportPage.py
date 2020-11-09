@@ -3,6 +3,8 @@ import tkinter as tk
 
 class ReportPage(tk.Frame):
 
+    name = "ReportPage"
+
     def __init__(self, parent, controller):
         # self = this frame specific.
         tk.Frame.__init__(self, parent)
@@ -25,6 +27,9 @@ class ReportPage(tk.Frame):
         pdf_button.place(relx=0.6, rely=0.70, anchor=tk.W)
 
         # TODO Add Visual Graphs & Plan Layout
+
+    def get_name(self):
+        return self.name
 
 
 # Function used for debugging purposes.

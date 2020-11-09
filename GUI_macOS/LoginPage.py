@@ -1,15 +1,12 @@
-from RegisterPage import RegisterPage
-from ReportPage import ReportPage
 import tkinter as tk
 import keyring as kr
 
 
-service_id = 'Wildlife Hospital'
-username = ""
-
-
 # sub-root to contain the LoginPage frame and a controller function to switch the tabs within the LoginPage
 class LoginPage(tk.Frame):
+
+    name = "LoginPage"
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -45,7 +42,7 @@ class LoginPage(tk.Frame):
         # Register Button
         register_button = tk.Button(login_frame, text="Register", relief=tk.FLAT,
                                     bg="#7f8694", fg="#023e8a", activebackground='#303A52',
-                                    command=lambda: controller.show_frame(RegisterPage), borderwidth=0,
+                                    command=lambda: controller.show_frame("RegisterPage"), borderwidth=0,
                                     activeforeground="#C5C8CF",
                                     font="Helvetica 10")
         register_button.place(relx=0.28, rely=0.70, anchor=tk.W)
@@ -54,10 +51,13 @@ class LoginPage(tk.Frame):
                                             text="", fg='#C03A3A')
         self.login_warning_label.place(relx=0.045, rely=0.8, anchor=tk.W)
 
+    def get_name(self):
+        return self.name
+
 
 def login_entry(self):
 
-    login_page = get_page(LoginPage)
+    login_page = get_page("LoginPage")
     check_pass_word = kr.get_password(
         service_id, login_page.user_name.get())
     print(check_pass_word)
@@ -69,9 +69,9 @@ def login_entry(self):
               str(login_page.user_name.get()))
         if login_page.user_name.get() == "admin":
             print("Logged in As Administrator")
-            show_frame(ReportPage)
+            show_frame("ReportPage")
         elif login_page.user_name.get() != "admin":
             print("Logged in As Staff Member")
-            show_frame(ReportPage)
+            show_frame("ReportPage")
     elif check_pass_word != None and check_pass_word != login_page.pass_word.get():
         login_page.login_warning_label["text"] = "Username or Password does not exist.."
