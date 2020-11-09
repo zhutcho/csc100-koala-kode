@@ -7,8 +7,6 @@ username = ""
 
 class RegisterPage(tk.Frame):
 
-    name = "RegisterPage"
-
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -47,9 +45,6 @@ class RegisterPage(tk.Frame):
         self.register_warning_label = tk.Label(register_frame,
                                                text="", fg='#C03A3A')
         self.register_warning_label.place(relx=0.045, rely=0.7, anchor=tk.W)
-
-    def get_name(self):
-        return self.name
 
 
 def register_entry(self):
