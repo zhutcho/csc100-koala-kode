@@ -9,4 +9,6 @@ Feel free to add stuff or elaborate further on points.
 * Create the ReportPage gui.
 * Make the gui pages look appealing.
 * Code the pdf creation part.
+* Create some tests.
+* Add a thirdparty folder for external libraries?
 * Write the README.md file.
