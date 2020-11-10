@@ -34,21 +34,27 @@ class CreatePDF:
         bc.strokeColor = colors.black
 
         bc.valueAxis.valueMin = 0
-        bc.valueAxis.valueMax = 50
-        bc.valueAxis.valueStep = 10
+        bc.valueAxis.valueMax = 250
+        bc.valueAxis.valueStep = 25
 
         bc.categoryAxis.labels.boxAnchor = 'ne'
         bc.categoryAxis.labels.dx = 8
         bc.categoryAxis.labels.dy = -2
-        bc.categoryAxis.labels.angle = 30
+        bc.categoryAxis.labels.angle = 45
         bc.categoryAxis.categoryNames = xValues
 
         drawing.add(bc)
 
         renderPDF.drawToFile(drawing, 'reports/test.pdf', 'My First Drawing')
 
-    def drawLGABArChart(self):
+    def drawLGABarChart(self):
         dictionary = self.getDB().getMonthlyDataForLGA('01', 2018)
+        xValues = self.getKeys(dictionary)
+        yValues = self.getValues(dictionary)
+        self.drawBarChart(xValues, yValues)
+
+    def drawTaxonsBarChart(self):
+        dictionary = self.getDB().getMonthlyDataForTaxons('01', 2018)
         xValues = self.getKeys(dictionary)
         yValues = self.getValues(dictionary)
         self.drawBarChart(xValues, yValues)
@@ -56,6 +62,6 @@ class CreatePDF:
 
 pdf = CreatePDF()
 
-print(pdf.getKeys(pdf.getDB().getMonthlyDataForLGA('01', 2018)))
-print(pdf.getValues(pdf.getDB().getMonthlyDataForLGA('01', 2018)))
-pdf.drawLGABArChart()
+print(pdf.getKeys(pdf.getDB().getMonthlyDataForTaxons('01', 2018)))
+print(pdf.getValues(pdf.getDB().getMonthlyDataForTaxons('01', 2018)))
+pdf.drawTaxonsBarChart()
