@@ -1,5 +1,8 @@
 import tkinter as tk
-from Database.CSC100DB import CSC100DB
+from database.CSC100DB import CSC100DB
+
+
+db = CSC100DB()
 
 
 class ReportPage(tk.Frame):
@@ -12,13 +15,14 @@ class ReportPage(tk.Frame):
 
         # print to PDF Button
         pdf_button = tk.Button(self, text="Create PDF",
-                               relief=tk.FLAT, command=lambda: createPDF())
+                               relief=tk.FLAT, command=lambda: self.buttonClick())
+        pdf_button.pack()
 
         # TODO Add Visual Graphs & Plan Layout
 
 
 # Function used for debugging purposes.
 
-
-def createPDF():
-    print(CSC100DB.callMonthlyProc())
+    def buttonClick(self):
+        print(db.getMonthlyDataForTaxons('01', 2018))
+        print(db.getMonthlyDataForLGA('01', 2018))
