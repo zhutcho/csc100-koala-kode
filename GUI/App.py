@@ -20,7 +20,7 @@ class MainApp(tk.Tk):
         # Set Full-Screen
         self.state("zoomed")
         container.pack(side="top", fill="both", expand=True)
-
+    
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
@@ -61,6 +61,6 @@ class MainApp(tk.Tk):
 
 
 app = MainApp()
-#app.geometry("1920x1080")
-app.state('zoomed')
+app.geometry("{}x{}".format(app.winfo_screenwidth(), app.winfo_screenheight()))
+app.minsize(500,250)
 app.mainloop()

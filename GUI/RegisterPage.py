@@ -14,30 +14,33 @@ class RegisterPage(tk.Frame):
 
         # Create new frame and
         register_frame = tk.Frame(self, width=480, height=250)
-        register_frame.place(x=register_frame.winfo_screenwidth()/2, y=register_frame.winfo_screenheight()/2 - 100, anchor="c")
+        register_frame.pack()
 
-        # USERNAME GUI
-        register_label = tk.Label(register_frame,
-                                  text="New Username: ")
-        register_label.place(relx=0.37, rely=0.18, anchor=tk.CENTER)
+       
         # Entry Box
         self.new_username = tk.Entry(register_frame, width=35)
-        self.new_username.place(relx=0.5, rely=0.25, anchor=tk.CENTER)
+        self.new_username.place(in_=register_frame,relx=0.5, rely=0.25, anchor=tk.CENTER)
         self.new_username.insert(0,"admin")
         self.new_username.config(state="readonly")
+         # USERNAME GUI
+        register_label = tk.Label(register_frame,
+                                  text="New Username: ")
+        register_label.place(in_=self.new_username, relx=.2, rely=-0.75, anchor=tk.CENTER)
+
+# Entry Box
+        self.new_password = tk.Entry(register_frame, width=35)
+        self.new_password.place(in_=register_frame,relx=0.5, rely=0.45, anchor=tk.CENTER)
+        self.new_password.config(show='*')
         # PASSWORD GUI
         password_label = tk.Label(register_frame,
                                   text="New Password: ")
-        password_label.place(relx=0.37, rely=0.38, anchor=tk.CENTER)
-        # Entry Box
-        self.new_password = tk.Entry(register_frame, width=35)
-        self.new_password.place(relx=0.5, rely=0.45, anchor=tk.CENTER)
-        self.new_password.config(show='*')
+        password_label.place(in_=self.new_password,relx=0.19, rely=-0.75, anchor=tk.CENTER)
+        
         # Create Button GUI
         create_button = tk.Button(register_frame, text="Create", command=lambda:
                                   register_entry(self))
 
-        create_button.place(relx=0.32, rely=0.57, anchor=tk.CENTER)
+        create_button.place(in_=self.new_password,relx=0.1, rely=2, anchor=tk.CENTER)
         # Cancel Button GUI
         """
         cancel_button = tk.Button(register_frame,
@@ -46,7 +49,7 @@ class RegisterPage(tk.Frame):
         """
         self.register_warning_label = tk.Label(register_frame,
                                                text="", fg='#C03A3A')
-        self.register_warning_label.place(relx=0.27, rely=0.7, anchor=tk.W)
+        self.register_warning_label.place(in_=register_frame,relx=0.28, rely=0.7, anchor=tk.W)
 
 
 def register_entry(self):
