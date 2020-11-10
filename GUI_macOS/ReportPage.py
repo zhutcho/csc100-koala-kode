@@ -1,5 +1,5 @@
 import tkinter as tk
-import Database.CSC100DB
+from Database.CSC100DB import CSC100DB
 
 
 class ReportPage(tk.Frame):

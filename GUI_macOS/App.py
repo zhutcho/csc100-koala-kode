@@ -40,11 +40,11 @@ class MainApp(tk.Tk):
             index += 1
 
         print(self.frames["LoginPage"])
-        
+
         # Set Page on Startup:
         if kr.get_password(service_id, "admin") != None:
             self.show_frame("LoginPage")
-        else:    
+        else:
             self.show_frame("RegisterPage")
 
     def show_frame(self, cont):

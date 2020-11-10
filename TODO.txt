@@ -1,0 +1,12 @@
+Hi all,
+
+Just thought it would be a good idea to write out some of the things we need to get done. 
+Feel free to add stuff or elaborate further on points.
+
+
+* Setup pulling the data from the database.
+* Separate anything functional from the gui parts.
+* Create the ReportPage gui.
+* Make the gui pages look appealing.
+* Code the pdf creation part.
+* Write the README.md file.
