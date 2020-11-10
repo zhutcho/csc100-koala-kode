@@ -61,5 +61,6 @@ class MainApp(tk.Tk):
 
 
 app = MainApp()
-app.geometry("1920x1080")
+#app.geometry("1920x1080")
+app.state('zoomed')
 app.mainloop()
