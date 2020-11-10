@@ -23,22 +23,24 @@ class CreatePDF:
     def drawBarChart(self, xValues, yValues):
         drawing = Drawing(400, 200)
 
+        yValues = [tuple(yValues)]
+
         bc = VerticalBarChart()
-        # bc.x = 50
-        # bc.y = 50
-        # bc.height = 125
-        # bc.width = 300
+        bc.x = 50
+        bc.y = 50
+        bc.height = 125
+        bc.width = 300
         bc.data = yValues
         bc.strokeColor = colors.black
 
-        # bc.valueAxis.valueMin = 0
-        # bc.valueAxis.valueMax = 50
-        # bc.valueAxis.valueStep = 10
+        bc.valueAxis.valueMin = 0
+        bc.valueAxis.valueMax = 50
+        bc.valueAxis.valueStep = 10
 
-        # bc.categoryAxis.labels.boxAnchor = 'ne'
-        # bc.categoryAxis.labels.dx = 8
-        # bc.categoryAxis.labels.dy = -2
-        # bc.categoryAxis.labels.angle = 30
+        bc.categoryAxis.labels.boxAnchor = 'ne'
+        bc.categoryAxis.labels.dx = 8
+        bc.categoryAxis.labels.dy = -2
+        bc.categoryAxis.labels.angle = 30
         bc.categoryAxis.categoryNames = xValues
 
         drawing.add(bc)
