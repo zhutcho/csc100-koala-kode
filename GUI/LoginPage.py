@@ -44,20 +44,6 @@ class LoginPage(tk.Frame):
                                             text="", fg='#C03A3A')
         self.login_warning_label.place(in_=login_frame,relx=0.28, rely=0.7, anchor=tk.W)
 
-        #-- Unused Code -- 
-         """
-        # Register Text
-        request_registry_label = tk.Label(login_frame,
-                                          text="Need an account? ")
-        request_registry_label.place(relx=0.05, rely=0.70, anchor=tk.W)
-        # Register Button
-        register_button = tk.Button(login_frame, text="Register", relief=tk.FLAT,
-                                    bg="#7f8694", fg="#023e8a", activebackground='#303A52',
-                                    command=lambda: controller.show_frame("RegisterPage"), borderwidth=0,
-                                    activeforeground="#C5C8CF",
-                                    font="Helvetica 10")
-        register_button.place(relx=0.28, rely=0.70, anchor=tk.W)
-        """
 
     def get_name(self):
         """Returns Class Identity for Dict key"""
