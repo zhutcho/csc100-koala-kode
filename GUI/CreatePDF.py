@@ -4,12 +4,19 @@ from reportlab.lib import colors
 from reportlab.graphics import renderPDF
 from reportlab.graphics.charts.barcharts import VerticalBarChart
 from database.CSC100DB import CSC100DB
+import sys
 
 
-class CreatePDF:
+sys.path.config(1, '../database')
+
+
+class CreatePDF():
 
     def __init__(self):
         self.db = CSC100DB()
+
+    def getDB(self):
+        return self.db
 
     def getKeys(self, dictionary):
         return list(dictionary.keys())
@@ -17,10 +24,7 @@ class CreatePDF:
     def getValues(self, dictionary):
         return list(dictionary.values())
 
-    def getDB(self):
-        return self.db
-
-    def drawBarChart(self, xValues, yValues):
+    def getBarChart(self, xValues, yValues):
         drawing = Drawing(400, 200)
 
         yValues = [tuple(yValues)]
@@ -45,23 +49,22 @@ class CreatePDF:
 
         drawing.add(bc)
 
-        renderPDF.drawToFile(drawing, 'reports/test.pdf', 'My First Drawing')
+        return drawing
 
-    def drawLGABarChart(self):
+    def getLGABarChart(self):
         dictionary = self.getDB().getMonthlyDataForLGA('01', 2018)
         xValues = self.getKeys(dictionary)
         yValues = self.getValues(dictionary)
-        self.drawBarChart(xValues, yValues)
+        self.getBarChart(xValues, yValues)
 
-    def drawTaxonsBarChart(self):
+    def getTaxonsBarChart(self):
         dictionary = self.getDB().getMonthlyDataForTaxons('01', 2018)
         xValues = self.getKeys(dictionary)
         yValues = self.getValues(dictionary)
-        self.drawBarChart(xValues, yValues)
+        self.getBarChart(xValues, yValues)
 
+    def drawingToPDF(self, drawing, file):
+        renderPDF.drawToFile(drawing, file, 'Test Drawing')
 
-pdf = CreatePDF()
-
-print(pdf.getKeys(pdf.getDB().getMonthlyDataForTaxons('01', 2018)))
-print(pdf.getValues(pdf.getDB().getMonthlyDataForTaxons('01', 2018)))
-pdf.drawTaxonsBarChart()
+    def createMonthlyReport(self, file):
+        pass
