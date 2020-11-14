@@ -1,4 +1,3 @@
-from reportlab.graphics.charts.axes import XValueAxis
 from reportlab.graphics.shapes import Drawing
 from reportlab.lib import colors
 from reportlab.graphics import renderPDF
@@ -89,6 +88,7 @@ class CreatePDF():
             Returns:
                 reportlab Drawing - bar chart with LGA data
         """
+
         dictionary = self.getDB().getMonthlyDataForLGA('01', 2018)
         x_values = self.getKeys(dictionary)
         y_values = self.getValues(dictionary)
@@ -99,19 +99,27 @@ class CreatePDF():
             Returns:
                 reportlab Drawing - bar chart with Taxons Grouping data
         """
+
         dictionary = self.getDB().getMonthlyDataForTaxons('01', 2018)
         x_values = self.getKeys(dictionary)
         y_values = self.getValues(dictionary)
         self.getBarChart(x_values, y_values)
 
     def drawingToPDF(self, drawing, file):
-        """Draws drawing to pdf
+        """Outputs drawing to selected pdf
             Parameters:
                 self: the class instance
                 drawing: reportlab Drawing - drawing for pdf
-                file: str - file to output to
+                file: str - filename and location, filename must end in .pdf
         """
+
         renderPDF.drawToFile(drawing, file, 'Test Drawing')
 
     def createMonthlyReport(self, file):
+        """Outputs the monthly report to the specified file location
+            Parameters:
+                self: the class instance
+                file: str - filename and location, filename must end in .pdf
+        """
+
         pass
