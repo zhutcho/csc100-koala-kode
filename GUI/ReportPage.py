@@ -13,46 +13,17 @@ class ReportPage(tk.Frame):
         # set controller to MainApp()
         self.controller = controller
 
-        # print to PDF Button
-        pdf_button = tk.Button(self, text="Create PDF",
-                               relief=tk.FLAT, command=lambda: self.buttonClick())
-        pdf_button.place(relx=1, rely=0.57, anchor=tk.W)
-        pdf_button.pack()
+        # Generates monthly report
 
-        # drop down box
+        button1 = tk.Button(self, text="Generate monthly report",
+                               relief=tk.FLAT, command=lambda: self.buttonClick()).pack()
 
-        # Function used for drop down box
-        def show():
-            myLabel = tk.Label(self, text = clicked.get()).pack()
-
-        options = [
-            "Select Month",
-            "Janurary",
-            "Feburary",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
-        ]
-
-        clicked = tk.StringVar()
-        clicked.set(options[0])
-
-        drop = tk.OptionMenu(self, clicked, *options)
-        drop.pack()
-
-        dropButton = tk.Button(self, text = "Show Selection", command = show).pack()
         # TODO Add Visual Graphs & Plan Layout
 
 
-# Function used for debugging purposes.
+# Function used to generate monthly report
 
     def buttonClick(self):
         print(db.getMonthlyDataForTaxons('01', 2018))
         print(db.getMonthlyDataForLGA('01', 2018))
+        print(db.previousMonths('', '', ''))
