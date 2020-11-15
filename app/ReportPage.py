@@ -1,5 +1,6 @@
 import tkinter as tk
-from database.CSC100DB import CSC100DB
+from gui.CreatePDF import CreatePDF
+import datetime
 
 
 db = CSC100DB()
@@ -16,14 +17,8 @@ class ReportPage(tk.Frame):
         # Generates monthly report
 
         button1 = tk.Button(self, text="Generate monthly report",
-                               relief=tk.FLAT, command=lambda: self.buttonClick()).pack()
+                               relief=tk.FLAT, command=lambda: pdf.getMonthlyReport(month, year)).pack()
 
         # TODO Add Visual Graphs & Plan Layout
 
 
-# Function used to generate monthly report
-
-    def buttonClick(self):
-        print(db.getMonthlyDataForTaxons('01', 2018))
-        print(db.getMonthlyDataForLGA('01', 2018))
-        print(db.previousMonths('', '', ''))

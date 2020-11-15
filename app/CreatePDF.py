@@ -117,16 +117,18 @@ class CreatePDF():
         drawing.add(shape)
         renderPDF.drawToFile(drawing, file, 'Test Drawing')
 
-    def createMonthlyReport(self, file):
+    def getMonthlyReport(self, file, month, year):
         """Outputs the monthly report to the specified file location
             Parameters:
                 self: the class instance
-                file: str - filename and location, filename must end in .pdf
+                file: str - file location and name ending in .pdf
+                month: str - required month
+                year: int - required year
         """
 
         drawing = Drawing(800, 800)
 
-        drawing.add(self.getLGABarChart('01', 2018))
-        drawing.add(self.getTaxonsBarChart('01', 2018))
+        drawing.add(self.getLGABarChart(month, year))
+        drawing.add(self.getTaxonsBarChart(month, year))
 
         renderPDF.drawToFile(drawing, file, 'Test Drawing')
