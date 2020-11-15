@@ -3,10 +3,6 @@ from reportlab.lib import colors
 from reportlab.graphics import renderPDF
 from reportlab.graphics.charts.barcharts import VerticalBarChart
 from database.CSC100DB import CSC100DB
-import sys
-
-
-sys.path.config(1, '../database')
 
 
 class CreatePDF():
@@ -92,27 +88,33 @@ class CreatePDF():
         dictionary = self.getDB().getMonthlyDataForLGA(str(month), year)
         x_values = self.getKeys(dictionary)
         y_values = self.getValues(dictionary)
-        self.getBarChart(x_values, y_values)
+        return self.getBarChart(x_values, y_values)
 
-    def getTaxonsBarChart(self):
+    def getTaxonsBarChart(self, month, year):
         """Gets a bar chart with Taxons Grouping data
+            Parameters:
+                self: the class instance
+                month: str - month required
+                year: int - year required
             Returns:
                 reportlab Drawing - bar chart with Taxons Grouping data
         """
 
-        dictionary = self.getDB().getMonthlyDataForTaxons('01', 2018)
+        dictionary = self.getDB().getMonthlyDataForTaxons(str(month), year)
         x_values = self.getKeys(dictionary)
         y_values = self.getValues(dictionary)
-        self.getBarChart(x_values, y_values)
+        return self.getBarChart(x_values, y_values)
 
-    def drawingToPDF(self, drawing, file):
+    def drawingToPDF(self, shape, file):
         """Outputs drawing to selected pdf
             Parameters:
                 self: the class instance
-                drawing: reportlab Drawing - drawing for pdf
+                shape: reportlab Shape - inserted into drawing for pdf
                 file: str - filename and location, filename must end in .pdf
         """
 
+        drawing = Drawing(400, 300)
+        drawing.add(shape)
         renderPDF.drawToFile(drawing, file, 'Test Drawing')
 
     def createMonthlyReport(self, file):
@@ -127,4 +129,4 @@ class CreatePDF():
         drawing.add(self.getLGABarChart('01', 2018))
         drawing.add(self.getTaxonsBarChart('01', 2018))
 
-        self.drawingToPDF(drawing, file)
+        renderPDF.drawToFile(drawing, file, 'Test Drawing')
