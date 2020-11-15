@@ -1,4 +1,4 @@
-from ..gui.CreatePDF import CreatePDF
+from gui.CreatePDF import CreatePDF
 
 
 pdf = CreatePDF()
