@@ -1,9 +1,6 @@
 import tkinter as tk
-from gui.CreatePDF import CreatePDF
+from CreatePDF import CreatePDF
 import datetime
-
-
-db = CSC100DB()
 
 
 class ReportPage(tk.Frame):
