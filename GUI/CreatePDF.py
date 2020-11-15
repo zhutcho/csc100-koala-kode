@@ -54,10 +54,8 @@ class CreatePDF():
                 x_values: list - x values for the bar chart
                 y_values: list - y values for the bar chart
             Returns:
-                reportlab Drawing - bar chart with inputted values
+                reportlab Vertical Bar Chart - bar chart with inputted values
         """
-
-        drawing = Drawing(400, 200)
 
         y_values = [tuple(y_values)]
 
@@ -79,17 +77,19 @@ class CreatePDF():
         bc.categoryAxis.labels.angle = 45
         bc.categoryAxis.categoryNames = x_values
 
-        drawing.add(bc)
+        return bc
 
-        return drawing
-
-    def getLGABarChart(self):
-        """Gets a bar chart with Local Government Area data
+    def getLGABarChart(self, month, year):
+        """Gets a bar chart with Local Government Area data for the selected month
+            Parameters:
+                self: the class instance
+                month: str - month required
+                year: int - year required
             Returns:
                 reportlab Drawing - bar chart with LGA data
         """
 
-        dictionary = self.getDB().getMonthlyDataForLGA('01', 2018)
+        dictionary = self.getDB().getMonthlyDataForLGA(str(month), year)
         x_values = self.getKeys(dictionary)
         y_values = self.getValues(dictionary)
         self.getBarChart(x_values, y_values)
@@ -122,4 +122,9 @@ class CreatePDF():
                 file: str - filename and location, filename must end in .pdf
         """
 
-        pass
+        drawing = Drawing(800, 800)
+
+        drawing.add(self.getLGABarChart('01', 2018))
+        drawing.add(self.getTaxonsBarChart('01', 2018))
+
+        self.drawingToPDF(drawing, file)
