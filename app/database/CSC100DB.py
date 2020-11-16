@@ -1,5 +1,4 @@
 import mysql.connector
-import csv
 
 __author__ = "Erica Mealy - Course Coordinator, CSC100, 2020."
 
