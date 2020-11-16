@@ -78,6 +78,39 @@ class CreatePDF():
 
         return bc
 
+    def getPreviousMonths(self, month, year):
+        """Gets a dictionary with the total accessions for the trailing twelve months
+            Parameters:
+                self: the class instance
+                month: str - month required
+                year: int - year required
+            Returns:
+                dict - month year as key with total accessions for that month as value
+        """
+
+        previous_months = {}
+        month = int(month)
+        year = year
+        for months in range(12):
+            if month > 10:
+                str_month = str(month)
+            else:
+                str_month = "0" + str(month)
+                print(str_month)
+            month_list = self.getDB().getSpecificMonth(str_month, year)
+            print(month_list)
+            key = str(month_list[0])
+            value = int(month_list[1])
+            print(key)
+            print(value)
+            previous_months[key] = value
+            if month != 1:
+                month -= 1
+            else:
+                month = 12
+                year -= 1
+        return previous_months
+
     def getSpecificBarChart(self, type, month, year):
         """Gets a bar chart with accessions grouped by either Local Government Area, 
         Taxons Grouping, Trailing Twelve Months or the Same Month in Previous Years
@@ -96,7 +129,7 @@ class CreatePDF():
         elif type == "Taxons":
             dictionary = self.getDB().getMonthlyDataForTaxons(str(month), year)
         elif type == "Twelve":
-            dictionary = self.getDB().previousMonths(str(month), year)
+            dictionary = getPreviousMonths(str(month), year)
         elif type == "Prev":
             pass
         else:

@@ -84,7 +84,7 @@ class CSC100DB():
         """
         return self.callMonthlyProc("monthly_by_juris", month, year)
 
-    def specificMonth(self, month, year):
+    def getSpecificMonth(self, month, year):
         """Function to get the total accessions for a specific month
             Parameters:
                 self: the class instance it's called on
@@ -104,7 +104,7 @@ class CSC100DB():
                 for r in result:
                     specificMonth = [months[r[0]-1] +
                                      " " + str(r[1]), str(r[2])]
-            return specificMonth
+            return list(specificMonth)
 
         except Exception as e:
             return "Error:" + e
