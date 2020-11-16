@@ -1,3 +1,4 @@
+from reportlab.graphics.charts.textlabels import Label
 from reportlab.graphics.renderPDF import draw
 from reportlab.graphics.shapes import Drawing
 from reportlab.lib import colors
@@ -61,18 +62,18 @@ class CreatePDF():
 
         bc = VerticalBarChart()
         bc.x = 50
-        bc.y = 50
-        bc.height = 100
+        bc.y = 100
+        bc.height = 120
         bc.width = 350
         bc.data = y_values
         bc.strokeColor = colors.black
 
         bc.valueAxis.valueMin = 0
-        bc.valueAxis.valueMax = 250
+        bc.valueAxis.valueMax = 275
         bc.valueAxis.valueStep = 25
 
         bc.categoryAxis.labels.boxAnchor = 'ne'
-        bc.categoryAxis.labels.dx = 8
+        bc.categoryAxis.labels.dx = 0
         bc.categoryAxis.labels.dy = -2
         bc.categoryAxis.labels.angle = 65
         bc.categoryAxis.categoryNames = x_values
@@ -130,17 +131,37 @@ class CreatePDF():
                 year: int - required year
         """
 
-        drawing_lga = Drawing(100, 350)
-        drawing_lga.add(self.getLGABarChart(month, year))
+        label_lga = Label()
+        label_lga.setOrigin(180, 20)
+        label_lga.boxAnchor = 'ne'
+        label_lga.dx = 0
+        label_lga.dy = -20
+        label_lga.setText("Local Government Area Totals")
 
-        drawing_taxons = Drawing(100, 350)
-        drawing_taxons.add(self.getTaxonsBarChart(month, year))
+        draw_label_lga = Drawing(0, 40)
+        draw_label_lga.add(label_lga)
 
-        drawlist = [drawing_lga, drawing_taxons]
+        draw_lga = Drawing(0, 240)
+        draw_lga.add(self.getLGABarChart(month, year))
+
+        label_taxons = Label()
+        label_taxons.setOrigin(180, 20)
+        label_taxons.boxAnchor = 'ne'
+        label_taxons.dx = 0
+        label_taxons.dy = -20
+        label_taxons.setText("Taxon Grouping Totals")
+
+        draw_label_taxons = Drawing(0, 40)
+        draw_label_taxons.add(label_taxons)
+
+        draw_taxons = Drawing(0, 240)
+        draw_taxons.add(self.getTaxonsBarChart(month, year))
+
+        drawlist = [draw_label_lga, draw_lga, draw_label_taxons, draw_taxons]
 
         canvas = Canvas(file)
 
-        frame = Frame(inch, inch, 15.92*cm, 24.62*cm, showBoundary=1)
+        frame = Frame(inch, 0, 15.92*cm, 29.7*cm, showBoundary=1)
 
         frame.drawBoundary(canvas)
         frame.addFromList(drawlist, canvas)
