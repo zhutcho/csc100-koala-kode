@@ -53,17 +53,15 @@ class CreatePDF():
             Parameters:
                 self: the class instance
                 x_values: list - x values for the bar chart
-                y_values: list - y values for the bar chart
+                y_values: list of tuples - y values for the bar chart
             Returns:
                 reportlab Vertical Bar Chart - bar chart with inputted values
         """
 
-        y_values = [tuple(y_values)]
-
         bc = VerticalBarChart()
         bc.x = 50
         bc.y = 100
-        bc.height = 120
+        bc.height = 150
         bc.width = 350
         bc.data = y_values
         bc.strokeColor = colors.black
@@ -92,7 +90,7 @@ class CreatePDF():
 
         dictionary = self.getDB().getMonthlyDataForLGA(str(month), year)
         x_values = self.getKeys(dictionary)
-        y_values = self.getValues(dictionary)
+        y_values = [tuple(self.getValues(dictionary))]
         return self.getBarChart(x_values, y_values)
 
     def getTaxonsBarChart(self, month, year):
@@ -107,11 +105,37 @@ class CreatePDF():
 
         dictionary = self.getDB().getMonthlyDataForTaxons(str(month), year)
         x_values = self.getKeys(dictionary)
-        y_values = self.getValues(dictionary)
+        y_values = [tuple(self.getValues(dictionary))]
         return self.getBarChart(x_values, y_values)
 
+    def getTwelveMonthsBarChart(self, month, year):
+        """Gets a bar chart with the previous twelve months' totals
+            Parameters:
+                self: the class instance
+                month: str - month required
+                year: int - year required
+            Returns:
+                reportlab Drawing - bar chart with previous twelve months' totals
+        """
+
+        # Use previousMonths
+        pass
+
+    def getSameMonthsBarChart(self, month, year):
+        """Gets a bar chart with the same month in previous years' totals
+            Parameters:
+                self: the class instance
+                month: str - month required
+                year: int - year required
+            Returns:
+                reportlab Drawing - bar chart with the same month in previous years' totals
+        """
+
+        # Use something
+        pass
+
     def drawingToPDF(self, shape, file):
-        """Outputs drawing to selected pdf
+        """Outputs drawing to selected pdf - testing method
             Parameters:
                 self: the class instance
                 shape: reportlab Shape - inserted into drawing for pdf
@@ -141,7 +165,7 @@ class CreatePDF():
         draw_label_lga = Drawing(0, 40)
         draw_label_lga.add(label_lga)
 
-        draw_lga = Drawing(0, 240)
+        draw_lga = Drawing(0, 270)
         draw_lga.add(self.getLGABarChart(month, year))
 
         label_taxons = Label()
@@ -154,7 +178,7 @@ class CreatePDF():
         draw_label_taxons = Drawing(0, 40)
         draw_label_taxons.add(label_taxons)
 
-        draw_taxons = Drawing(0, 240)
+        draw_taxons = Drawing(0, 270)
         draw_taxons.add(self.getTaxonsBarChart(month, year))
 
         drawlist = [draw_label_lga, draw_lga, draw_label_taxons, draw_taxons]
@@ -167,11 +191,3 @@ class CreatePDF():
         frame.addFromList(drawlist, canvas)
 
         canvas.save()
-
-
-        # drawing = Drawing(800, 800)
-
-        # drawing.add(self.getLGABarChart(month, year))
-        # drawing.add(self.getTaxonsBarChart(month, year))
-
-        # renderPDF.drawToFile(drawing, file, 'Monthly Report')
