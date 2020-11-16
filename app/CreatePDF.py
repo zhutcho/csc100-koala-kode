@@ -202,7 +202,7 @@ class CreatePDF():
         canvas = Canvas(file)
 
         # Creating a frame to add flowables (drawings) to
-        frame = Frame(inch, 0, 15.92*cm, 29.7*cm, showBoundary=1)
+        frame = Frame(inch, 0, 15.92*cm, 29.7*cm)
 
         # Adding flowables
         frame.addFromList(drawlist, canvas)
