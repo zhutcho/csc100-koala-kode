@@ -1,4 +1,4 @@
-from reportlab.graphics.charts.textlabels import Label
+from reportlab.graphics.charts.textlabels import Label, LabelOffset
 from reportlab.graphics.renderPDF import draw
 from reportlab.graphics.shapes import Drawing
 from reportlab.lib import colors
@@ -68,7 +68,7 @@ class CreatePDF():
 
         # Setting up axis
         bc.valueAxis.valueMin = 0
-        bc.valueAxis.valueMax = 275
+        bc.valueAxis.valueMax = 300
         bc.valueAxis.valueStep = 25
 
         # Setting up position and angle of labels
@@ -76,6 +76,15 @@ class CreatePDF():
         bc.categoryAxis.labels.dx = 0
         bc.categoryAxis.labels.dy = -2
         bc.categoryAxis.labels.angle = 65
+
+        # Adding bar labels
+        bc.barLabelFormat = '%s'
+        bc.barLabels.nudge = 5
+        bc.barLabels.boxAnchor = 's'
+        bc.barLabels.dy = -1
+
+        # Changing bar colours
+        bc.bars[0].fillColor = colors.green
 
         # Adding x and y data to the chart
         bc.categoryAxis.categoryNames = x_values
