@@ -118,16 +118,16 @@ class CreatePDF():
         # Use something
         pass
 
-    def drawingToPDF(self, shape, file):
+    def drawingToPDF(self, flowable, file):
         """Outputs drawing to selected pdf - testing method
             Parameters:
                 self: the class instance
-                shape: reportlab Shape - inserted into drawing for pdf
+                flowable: reportlab Shape - inserted into drawing for pdf
                 file: str - filename and location, filename must end in .pdf
         """
 
         drawing = Drawing(400, 300)
-        drawing.add(shape)
+        drawing.add(flowable)
         renderPDF.drawToFile(drawing, file, 'Test Drawing')
 
     def getMonthlyReport(self, file, month, year):
@@ -150,7 +150,7 @@ class CreatePDF():
         draw_label_lga.add(label_lga)
 
         draw_lga = Drawing(0, 270)
-        draw_lga.add(self.getLGABarChart(month, year))
+        draw_lga.add(self.getSpecificBarChart("LGA", month, year))
 
         label_taxons = Label()
         label_taxons.setOrigin(180, 20)
@@ -163,7 +163,7 @@ class CreatePDF():
         draw_label_taxons.add(label_taxons)
 
         draw_taxons = Drawing(0, 270)
-        draw_taxons.add(self.getTaxonsBarChart(month, year))
+        draw_taxons.add(self.getSpecificBarChart("Taxons", month, year))
 
         drawlist = [draw_label_lga, draw_lga, draw_label_taxons, draw_taxons]
 

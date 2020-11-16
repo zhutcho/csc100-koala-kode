@@ -84,27 +84,27 @@ class CSC100DB():
         """
         return self.callMonthlyProc("monthly_by_juris", month, year)
 
-    def previousMonths(self, month, year):
-        """Function to get the total accessions for the previous 12 months from a supplied month, year  
+    def specificMonth(self, month, year):
+        """Function to get the total accessions for a specific month
             Parameters:
                 self: the class instance it's called on
                 month: string - the month that is being searched for as 'MM' - e.g. March as '03'
                 year: int - the year that is being searched for in YYYY format - e.g. 2018     
             Returns:
-                dictionary with mappings from month, year pair in the period to it's 
-                count for the 12 months prior to the supplied month, year
+                list - month year, total accessions
 
         """
         try:
-            prevMonths = []
+            specificMonth = []
             args = [month, year]
             months = ["Jan", "Feb", "Mar", "Apr", "May", "June",
                       "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
             result_args = self.cursor.callproc("monthly_prev_months", args)
             for result in self.cursor.stored_results():
                 for r in result:
-                    prevMonths.append(
-                        [months[r[0]-1] + " " + str(r[1]), str(r[2])])
+                    specificMonth = [months[r[0]-1] +
+                                     " " + str(r[1]), str(r[2])]
+            return specificMonth
 
         except Exception as e:
             return "Error:" + e

@@ -3,7 +3,6 @@ Hi all,
 Just thought it would be a good idea to write out some of the things we need to get done. 
 Feel free to add stuff or elaborate further on points.
 
-* Collapse bar chart calls to one function?
 * Make the gui pages look appealing.
 * Figure out how to auto download libraries.
 * Comment the code.
