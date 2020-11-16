@@ -58,65 +58,36 @@ class CreatePDF():
                 reportlab Vertical Bar Chart - bar chart with inputted values
         """
 
+        # Setting up sizing, position and colourings
         bc = VerticalBarChart()
         bc.x = 50
         bc.y = 100
         bc.height = 150
         bc.width = 350
-        bc.data = y_values
         bc.strokeColor = colors.black
 
+        # Setting up axis
         bc.valueAxis.valueMin = 0
         bc.valueAxis.valueMax = 275
         bc.valueAxis.valueStep = 25
 
+        # Setting up position and angle of labels
         bc.categoryAxis.labels.boxAnchor = 'ne'
         bc.categoryAxis.labels.dx = 0
         bc.categoryAxis.labels.dy = -2
         bc.categoryAxis.labels.angle = 65
+
+        # Adding x and y data to the chart
         bc.categoryAxis.categoryNames = x_values
+        bc.data = y_values
 
         return bc
 
-    def getPreviousMonths(self, month, year):
-        """Gets a dictionary with the total accessions for the trailing twelve months
-            Parameters:
-                self: the class instance
-                month: str - month required
-                year: int - year required
-            Returns:
-                dict - month year as key with total accessions for that month as value
-        """
-
-        previous_months = {}
-        month = int(month)
-        year = year
-        for months in range(12):
-            if month > 10:
-                str_month = str(month)
-            else:
-                str_month = "0" + str(month)
-                print(str_month)
-            month_list = self.getDB().getSpecificMonth(str_month, year)
-            print(month_list)
-            key = str(month_list[0])
-            value = int(month_list[1])
-            print(key)
-            print(value)
-            previous_months[key] = value
-            if month != 1:
-                month -= 1
-            else:
-                month = 12
-                year -= 1
-        return previous_months
-
     def getSpecificBarChart(self, type, month, year):
-        """Gets a bar chart with accessions grouped by either Local Government Area, 
-        Taxons Grouping, Trailing Twelve Months or the Same Month in Previous Years
+        """Gets a bar chart with accessions grouped by either Local Government Area or Taxons
             Parameters:
                 self: the class instance
-                type: str - choose from LGA, Taxons, Twelve or Prev
+                type: str - choose from LGA or Taxons
                 month: str - month required
                 year: int - year required
             Returns:
@@ -128,28 +99,11 @@ class CreatePDF():
             dictionary = self.getDB().getMonthlyDataForLGA(str(month), year)
         elif type == "Taxons":
             dictionary = self.getDB().getMonthlyDataForTaxons(str(month), year)
-        elif type == "Twelve":
-            dictionary = getPreviousMonths(str(month), year)
-        elif type == "Prev":
-            pass
         else:
             dictionary = {"Incorrect Entry": 100}
         x_values = self.getKeys(dictionary)
         y_values = [tuple(self.getValues(dictionary))]
         return self.getBarChart(x_values, y_values)
-
-    def getSameMonthsBarChart(self, month, year):
-        """Gets a bar chart with the same month in previous years' totals
-            Parameters:
-                self: the class instance
-                month: str - month required
-                year: int - year required
-            Returns:
-                reportlab Drawing - bar chart with the same month in previous years' totals
-        """
-
-        # Use something
-        pass
 
     def drawingToPDF(self, flowable, file):
         """Outputs drawing to selected pdf - testing method
@@ -172,6 +126,43 @@ class CreatePDF():
                 year: int - required year
         """
 
+        # For conversion of month to three letter abbreviation
+        months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+        # Creating a title
+        title = Label()
+        title.setOrigin(300, 20)
+        title.boxAnchor = 'ne'
+        title.dx = 0
+        title.dy = -5
+        title.fontSize = 30
+        title.setText("Monthly Report")
+
+        # Adding title to a drawing
+        draw_title = Drawing(0, 40)
+        draw_title.add(title)
+
+        # Creating a subtitle
+        subtitle = Label()
+        subtitle.setOrigin(320, 20)
+        subtitle.boxAnchor = 'ne'
+        subtitle.dx = 0
+        subtitle.dy = -10
+        subtitle.fontSize = 14
+
+        # Converts month to three letter abbreviation
+        str_month = months[int(month)-1]
+
+        # Setting the subtitle's text
+        subtitle.setText("Australia Zoo Wildlife Hospital, " +
+                         str_month + " " + str(year))
+
+        # Adding subtitle to a drawing
+        draw_subtitle = Drawing(0, 30)
+        draw_subtitle.add(subtitle)
+
+        # Creating a label for the first chart
         label_lga = Label()
         label_lga.setOrigin(180, 20)
         label_lga.boxAnchor = 'ne'
@@ -179,12 +170,15 @@ class CreatePDF():
         label_lga.dy = -20
         label_lga.setText("Local Government Area Totals")
 
+        # Adding label to a drawing
         draw_label_lga = Drawing(0, 40)
         draw_label_lga.add(label_lga)
 
+        # Creating drawing for the lga chart
         draw_lga = Drawing(0, 270)
         draw_lga.add(self.getSpecificBarChart("LGA", month, year))
 
+        # Creating a label for the second chart
         label_taxons = Label()
         label_taxons.setOrigin(180, 20)
         label_taxons.boxAnchor = 'ne'
@@ -192,19 +186,26 @@ class CreatePDF():
         label_taxons.dy = -20
         label_taxons.setText("Taxon Grouping Totals")
 
+        # Adding label to a drawing
         draw_label_taxons = Drawing(0, 40)
         draw_label_taxons.add(label_taxons)
 
+        # Creating drawing for the taxons chart
         draw_taxons = Drawing(0, 270)
         draw_taxons.add(self.getSpecificBarChart("Taxons", month, year))
 
-        drawlist = [draw_label_lga, draw_lga, draw_label_taxons, draw_taxons]
+        # List of drawings in order of how to place them in the canvas
+        drawlist = [draw_title, draw_subtitle, draw_label_lga, draw_lga,
+                    draw_label_taxons, draw_taxons]
 
+        # Creating a canvas (pdf file) and saving it to a location
         canvas = Canvas(file)
 
+        # Creating a frame to add flowables (drawings) to
         frame = Frame(inch, 0, 15.92*cm, 29.7*cm, showBoundary=1)
 
-        frame.drawBoundary(canvas)
+        # Adding flowables
         frame.addFromList(drawlist, canvas)
 
+        # Saving the pdf
         canvas.save()
