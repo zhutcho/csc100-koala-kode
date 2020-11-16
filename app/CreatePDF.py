@@ -1,7 +1,11 @@
+from reportlab.graphics.renderPDF import draw
 from reportlab.graphics.shapes import Drawing
 from reportlab.lib import colors
+from reportlab.lib.units import cm, inch
 from reportlab.graphics import renderPDF
 from reportlab.graphics.charts.barcharts import VerticalBarChart
+from reportlab.pdfgen.canvas import Canvas
+from reportlab.platypus.frames import Frame
 from database.CSC100DB import CSC100DB
 
 
@@ -58,8 +62,8 @@ class CreatePDF():
         bc = VerticalBarChart()
         bc.x = 50
         bc.y = 50
-        bc.height = 125
-        bc.width = 300
+        bc.height = 100
+        bc.width = 350
         bc.data = y_values
         bc.strokeColor = colors.black
 
@@ -70,7 +74,7 @@ class CreatePDF():
         bc.categoryAxis.labels.boxAnchor = 'ne'
         bc.categoryAxis.labels.dx = 8
         bc.categoryAxis.labels.dy = -2
-        bc.categoryAxis.labels.angle = 45
+        bc.categoryAxis.labels.angle = 65
         bc.categoryAxis.categoryNames = x_values
 
         return bc
@@ -126,9 +130,27 @@ class CreatePDF():
                 year: int - required year
         """
 
-        drawing = Drawing(800, 800)
+        drawing_lga = Drawing(100, 350)
+        drawing_lga.add(self.getLGABarChart(month, year))
 
-        drawing.add(self.getLGABarChart(month, year))
-        drawing.add(self.getTaxonsBarChart(month, year))
+        drawing_taxons = Drawing(100, 350)
+        drawing_taxons.add(self.getTaxonsBarChart(month, year))
 
-        renderPDF.drawToFile(drawing, file, 'Test Drawing')
+        drawlist = [drawing_lga, drawing_taxons]
+
+        canvas = Canvas(file)
+
+        frame = Frame(inch, inch, 15.92*cm, 24.62*cm, showBoundary=1)
+
+        frame.drawBoundary(canvas)
+        frame.addFromList(drawlist, canvas)
+
+        canvas.save()
+
+
+        # drawing = Drawing(800, 800)
+
+        # drawing.add(self.getLGABarChart(month, year))
+        # drawing.add(self.getTaxonsBarChart(month, year))
+
+        # renderPDF.drawToFile(drawing, file, 'Monthly Report')
