@@ -78,48 +78,32 @@ class CreatePDF():
 
         return bc
 
-    def getLGABarChart(self, month, year):
-        """Gets a bar chart with Local Government Area data for the selected month
+    def getSpecificBarChart(self, type, month, year):
+        """Gets a bar chart with accessions grouped by either Local Government Area, 
+        Taxons Grouping, Trailing Twelve Months or the Same Month in Previous Years
             Parameters:
                 self: the class instance
+                type: str - choose from LGA, Taxons, Twelve or Prev
                 month: str - month required
                 year: int - year required
             Returns:
-                reportlab Drawing - bar chart with LGA data
+                reportlab Drawing - bar chart with data grouped as specified
         """
 
-        dictionary = self.getDB().getMonthlyDataForLGA(str(month), year)
+        dictionary = {}
+        if type == "LGA":
+            dictionary = self.getDB().getMonthlyDataForLGA(str(month), year)
+        elif type == "Taxons":
+            dictionary = self.getDB().getMonthlyDataForTaxons(str(month), year)
+        elif type == "Twelve":
+            dictionary = self.getDB().previousMonths(str(month), year)
+        elif type == "Prev":
+            pass
+        else:
+            dictionary = {"Incorrect Entry": 100}
         x_values = self.getKeys(dictionary)
         y_values = [tuple(self.getValues(dictionary))]
         return self.getBarChart(x_values, y_values)
-
-    def getTaxonsBarChart(self, month, year):
-        """Gets a bar chart with Taxons Grouping data
-            Parameters:
-                self: the class instance
-                month: str - month required
-                year: int - year required
-            Returns:
-                reportlab Drawing - bar chart with Taxons Grouping data
-        """
-
-        dictionary = self.getDB().getMonthlyDataForTaxons(str(month), year)
-        x_values = self.getKeys(dictionary)
-        y_values = [tuple(self.getValues(dictionary))]
-        return self.getBarChart(x_values, y_values)
-
-    def getTwelveMonthsBarChart(self, month, year):
-        """Gets a bar chart with the previous twelve months' totals
-            Parameters:
-                self: the class instance
-                month: str - month required
-                year: int - year required
-            Returns:
-                reportlab Drawing - bar chart with previous twelve months' totals
-        """
-
-        # Use previousMonths
-        pass
 
     def getSameMonthsBarChart(self, month, year):
         """Gets a bar chart with the same month in previous years' totals
