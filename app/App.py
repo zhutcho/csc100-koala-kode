@@ -47,15 +47,23 @@ class App(tk.Tk):
             self.show_frame("RegisterPage")
 
     def show_frame(self, cont):
-        """This function is used to bring the window to the front, for viewing.
-        Takes one argument show_frame(WindowClass)"""
+        """gets a frame and raises it to the top
+            Parameters:
+                self: the class instance
+                cont: name of the page class as a string
+        """
         frame = self.frames[cont]
         print(frame)
         frame.tkraise()
 
     def get_page(self, page_class):
-        """This function is used to pull a windows data without needing to view the page
-        Takes one argument get_page(WindowClass)"""
+        """Gets the keys of a dictionary
+            Parameters:
+                self: the class instance
+                page_class: name of the page class as a string
+            Returns:
+                the page itself
+        """
         return self.frames[page_class]
 
 
