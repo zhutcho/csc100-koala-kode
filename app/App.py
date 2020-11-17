@@ -11,22 +11,22 @@ username = ""
 # TODO CHECK TO CHANGE THE kr IMPORT AND MOVE IT TO THE REGISTER PAGE
 
 
-class MainApp(tk.Tk):
+class App(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-        
-        #Container is the Parent frame 
+
+        # Container is the Parent frame
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        #Empty Dict to store each class foreach frame_names as key.
+        # Empty Dict to store each class foreach frame_names as key.
         self.frames = {}
         self.frame_names = ["LoginPage", "RegisterPage", "ReportPage"]
-        
-        #Cycle through a tuple of windows and set them all to frames which is packed by the container from above.
+
+        # Cycle through a tuple of windows and set them all to frames which is packed by the container from above.
         index = 0
         for F in (LoginPage, RegisterPage, ReportPage):
             frame = F(container, self)
@@ -39,8 +39,8 @@ class MainApp(tk.Tk):
 
         print(self.frames["LoginPage"])
 
-        #Set which page is to be displayed on startup based on/
-        #whether there exists a user in the keyring named 'admin'
+        # Set which page is to be displayed on startup based on/
+        # whether there exists a user in the keyring named 'admin'
         if kr.get_password(service_id, "admin") != None:
             self.show_frame("LoginPage")
         else:
@@ -61,10 +61,11 @@ class MainApp(tk.Tk):
 
 def RunApp():
     """Function that starts the app & sets window restrictions"""
-    app = MainApp()
-    app.geometry("{}x{}".format(app.winfo_screenwidth(), app.winfo_screenheight()))
-    app.minsize(500,250)
+    app = App()
+    app.geometry("{}x{}".format(
+        app.winfo_screenwidth(), app.winfo_screenheight()))
+    app.minsize(500, 250)
     app.mainloop()
 
-RunApp()
 
+RunApp()
