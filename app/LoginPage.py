@@ -16,7 +16,7 @@ class LoginPage(tk.Frame):
 
         #Controller references the parent class(App.MainApp())
         self.controller = controller
-
+        
         #Login_Frame
         login_frame = tk.Frame(self, width=480, height=240)
         login_frame.pack()
@@ -44,14 +44,24 @@ class LoginPage(tk.Frame):
                                             text="", fg='#C03A3A')
         self.login_warning_label.place(in_=login_frame,relx=0.28, rely=0.7, anchor=tk.W)
 
-
     def get_name(self):
-        """Returns Class Identity for Dict key"""
+        """Gets the keys of a dictionary
+            Parameters:
+                self: the class instance
+            Returns:
+                string as Dict key
+        """
         return "LoginPage"
 
     def login_entry(self):
-        """Login Requirement Checks"""
+        """Login Requirement Checks
+            Parameters:
+                self: the class instance
+            Returns:
+                boolean: True as successful login, False as unsuccessful
+        """
         login_page = self.controller.get_page("LoginPage")
+        
 
         #Check password
         check_pass_word = kr.get_password(
@@ -63,15 +73,16 @@ class LoginPage(tk.Frame):
         #Password Requirement Checks
         if check_pass_word == None:
             login_page.login_warning_label["text"] = "Username or Password does not exist.."
-
+ 
         elif check_pass_word != None and check_pass_word == login_page.pass_word.get():
-            print("Successfully logged in as: " +
-                  str(login_page.user_name.get()))
             if login_page.user_name.get() == "admin":
                 print("Logged in As Administrator")
                 self.controller.show_frame("ReportPage")
+
             elif login_page.user_name.get() != "admin":
                 print("Logged in As Staff Member")
                 #REMOVED CODE FOR STAFF MEMBER PAGE
+ 
         elif check_pass_word != None and check_pass_word != login_page.pass_word.get():
             login_page.login_warning_label["text"] = "Username or Password does not exist.."
+ 
