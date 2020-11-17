@@ -1,7 +1,6 @@
 import tkinter as tk
 from database.CSC100DB import CSC100DB
 from PIL import Image,ImageTk
-from pdf2image import convert_from_path
 from tkdocviewer import *
 
 
