@@ -1,7 +1,5 @@
 from CreatePDF import CreatePDF
 import tkinter as tk
-from PIL import Image, ImageTk
-from pdf2image import convert_from_path
 from tkdocviewer import *
 
 
