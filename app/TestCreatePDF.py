@@ -34,5 +34,5 @@ print("------------------------------------")
 
 # Exports a test monthly report to a pdf
 print("Exported Test Monthly Report to a PDF")
-pdf.getMonthlyReport('app/tests/test_monthlyreport.pdf', '01', 2018)
+pdf.exportMonthlyReport('app/tests/test_monthlyreport.pdf', '01', 2018)
 print("------------------------------------")

@@ -22,6 +22,9 @@ class App(tk.Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
+        # Change tkinter window name
+        self.title("Australia Zoo Wildlife Hospital System")
+
         # Empty Dict to store each class foreach frame_names as key.
         self.frames = {}
         self.frame_names = ["LoginPage", "RegisterPage", "ReportPage"]
@@ -30,14 +33,10 @@ class App(tk.Tk):
         index = 0
         for F in (LoginPage, RegisterPage, ReportPage):
             frame = F(container, self)
-            print(self.frame_names[index])
-            print(frame)
             self.frames[self.frame_names[index]] = frame
 
             frame.grid(row=0, column=0, sticky="nsew")
             index += 1
-
-        print(self.frames["LoginPage"])
 
         # Set which page is to be displayed on startup based on/
         # whether there exists a user in the keyring named 'admin'
@@ -53,7 +52,6 @@ class App(tk.Tk):
                 cont: name of the page class as a string
         """
         frame = self.frames[cont]
-        print(frame)
         frame.tkraise()
 
     def get_page(self, page_class):

@@ -118,7 +118,7 @@ class CreatePDF():
         """Outputs drawing to selected pdf - testing method
             Parameters:
                 self: the class instance
-                flowable: reportlab Shape - inserted into drawing for pdf
+                flowable: reportlab Flowable - inserted into drawing for pdf
                 file: str - filename and location, filename must end in .pdf
         """
 
@@ -126,7 +126,7 @@ class CreatePDF():
         drawing.add(flowable)
         renderPDF.drawToFile(drawing, file, 'Test Drawing')
 
-    def getMonthlyReport(self, file, month, year):
+    def exportMonthlyReport(self, file, month, year):
         """Outputs the monthly report to the specified file location
             Parameters:
                 self: the class instance

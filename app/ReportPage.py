@@ -1,18 +1,16 @@
+from CreatePDF import CreatePDF
 import tkinter as tk
-from database.CSC100DB import CSC100DB
-from PIL import Image,ImageTk
+from PIL import Image, ImageTk
 from pdf2image import convert_from_path
 from tkdocviewer import *
 
-
-db = CSC100DB()
 
 class ReportPage(tk.Frame):
 
     def __init__(self, parent, controller):
         # self = this frame specific.
         tk.Frame.__init__(self, parent)
-        # set controller to MainApp()
+        # set controller to App.App()
         self.controller = controller
 
         """report_frame = tk.Frame(self, width=480, height=240)
@@ -21,13 +19,22 @@ class ReportPage(tk.Frame):
         # Generates monthly report
 
         button1 = tk.Button(self, text="Generate monthly report",
-                               relief=tk.FLAT, command=lambda: self.buttonClick()).pack()
+                            relief=tk.FLAT, command=lambda: self.exportMonthlyReport('01', 2018)).pack()
 
         # Create a DocViewer widget
-        v = DocViewer(self)
-        v.pack(side="top", expand=1, fill="both")
+        self.v = DocViewer(self)
+        self.v.pack(side="top", expand=1, fill="both")
 
-        # Display some document
-        v.display_file("Put the path of the pdf here")
+    def exportMonthlyReport(self, month, year):
+        """Exports Monthly Report to designated file path with dating
+            Parameters:
+                self: the class instance
+                month: the required month
+                year: the required year
+        """
 
-        # TODO Add Visual Graphs & Plan Layout
+        pdf = CreatePDF()
+        pdf.exportMonthlyReport("app/docs/monthlyreport.pdf", month, year)
+
+        # Display monthly report
+        self.v.display_file("app/docs/monthlyreport.pdf")
